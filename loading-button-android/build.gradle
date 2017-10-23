@@ -4,7 +4,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 //Bintray depends on this global variable to set the library version!
-version = '1.8.3'
+version = '1.8.3-RA'
 group = 'br.com.simplepass'
 
 android {
@@ -12,10 +12,10 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 6
-        versionName "1.8.3"
+        versionName "1.8.3-RA"
     }
     buildTypes {
         release {
