@@ -64,13 +64,13 @@ install {
         pom.project {
             name 'LoadingButtonAndroid'
             description 'A button to substitute the ProgressDialog'
-            url 'https://github.com/leandroBorgesFerreira/LoadingButtonAndroid'
+            url 'https://github.com/rolandoamarillo/LoadingButtonAndroid'
             inceptionYear '2017'
 
             packaging 'aar'
             groupId 'br.com.simplepass'
             artifactId 'loading-button-android'
-            version '1.8.3'
+            version '1.8.3-RA'
 
             licenses {
                 license {
@@ -80,8 +80,8 @@ install {
                 }
             }
             scm {
-                connection 'https://github.com/leandroBorgesFerreira/LoadingButtonAndroid.git'
-                url 'https://github.com/leandroBorgesFerreira/LoadingButtonAndroid'
+                connection 'https://github.com/rolandoamarillo/LoadingButtonAndroid.git'
+                url 'https://github.com/rolandoamarillo/LoadingButtonAndroid'
 
             }
             developers {
@@ -105,9 +105,9 @@ bintray {
         userOrg = 'lehen01'
         licenses = ['Apache-2.0']
         labels = ['customview', 'fragment', 'map']
-        websiteUrl = 'https://github.com/leandroBorgesFerreira/LoadingButtonAndroid'
-        issueTrackerUrl = 'https://github.com/leandroBorgesFerreira/LoadingButtonAndroid/issues'
-        vcsUrl = 'https://github.com/leandroBorgesFerreira/LoadingButtonAndroid.git'
+        websiteUrl = 'https://github.com/rolandoamarillo/LoadingButtonAndroid'
+        issueTrackerUrl = 'https://github.com/rolandoamarillo/LoadingButtonAndroid/issues'
+        vcsUrl = 'https://github.com/rolandoamarillo/LoadingButtonAndroid.git'
         publicDownloadNumbers = true
     }
 
