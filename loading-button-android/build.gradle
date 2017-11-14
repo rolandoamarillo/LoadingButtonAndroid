@@ -4,7 +4,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 //Bintray depends on this global variable to set the library version!
-version = '1.8.3-RA'
+version = '1.8.4-RA'
 group = 'br.com.simplepass'
 
 android {
@@ -15,7 +15,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 6
-        versionName "1.8.3-RA"
+        versionName "1.8.4-RA"
     }
     buildTypes {
         release {
@@ -24,7 +24,7 @@ android {
         }
     }
 
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
     sourceSets {
@@ -70,8 +70,7 @@ install {
             packaging 'aar'
             groupId 'br.com.simplepass'
             artifactId 'loading-button-android'
-            version '1.8.3-RA'
-
+            version '1.8.4-RA'
             licenses {
                 license {
                     name 'The Apache Software License, Version 2.0'

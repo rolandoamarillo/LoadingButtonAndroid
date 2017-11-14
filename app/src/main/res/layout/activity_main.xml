@@ -75,6 +75,7 @@
         app:spinning_bar_width="6dp" />
 
     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/noBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

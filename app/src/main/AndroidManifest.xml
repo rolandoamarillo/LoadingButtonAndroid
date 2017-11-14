@@ -14,9 +14,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SecondActivity" />
-        <activity android:name=".AnkoActivity">
-
-        </activity>
+        <activity android:name=".AnkoActivity" />
     </application>
 
 </manifest>
