@@ -13,12 +13,13 @@ import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Handler;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import br.com.simplepass.loading_button_lib.R;
 import br.com.simplepass.loading_button_lib.Utils;
@@ -33,7 +34,7 @@ import br.com.simplepass.loading_button_lib.interfaces.OnAnimationEndListener;
  * Made by Leandro Ferreira.
  *
  */
-public class CircularProgressButton extends Button implements AnimatedButton, CustomizableByCodeWithText {
+public class CircularProgressButton extends AppCompatButton implements AnimatedButton, CustomizableByCode {
     private enum State {
         PROGRESS, IDLE, DONE, STOPED
     }
@@ -48,6 +49,7 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
     private AnimatorSet mAnimatorSet;
 
     private int mFillColorDone;
+
     private Bitmap mBitmapDone;
 
     private Params mParams;
@@ -96,7 +98,7 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
      */
     @TargetApi(23)
     public CircularProgressButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
 
         init(context, attrs, defStyleAttr, defStyleRes);
     }
@@ -141,10 +143,20 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
         mState = State.IDLE;
 
         mParams.mText = this.getText().toString();
-        mParams.mDrawables = this.getCompoundDrawablesRelative();
+        mParams.mDrawables = this.getCompoundDrawables();
         if (mGradientDrawable != null) {
             setBackground(mGradientDrawable);
         }
+    }
+
+    @Override
+    public void setBackgroundColor (int color) {
+        mGradientDrawable.setColor(color);
+    }
+
+    @Override
+    public void setBackgroundResource (@ColorRes int resid) {
+        mGradientDrawable.setColor(ContextCompat.getColor(getContext(), resid));
     }
 
     private void loadGradientDrawable(Drawable drawable) {
@@ -171,6 +183,9 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
     @Override
     public void setSpinningBarColor(int color) {
         mParams.mSpinningBarColor = color;
+        if (mAnimatedDrawable != null) {
+            mAnimatedDrawable.setLoadingBarColor(color);
+        }
     }
 
     @Override
@@ -201,11 +216,6 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
     @Override
     public void setFinalCornerRadius(float radius) {
         mParams.mFinalCornerRadius = radius;
-    }
-
-    @Override
-    public void setButtonText(String text) {
-        mParams.mText = text;
     }
 
     /**
@@ -250,6 +260,7 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
             mAnimatedDrawable.draw(canvas);
         }
     }
+
 
     /**
      * Stops the animation and sets the button in the STOPED state.
@@ -387,7 +398,7 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
                 setClickable(true);
                 mIsMorphingInProgress = false;
                 setText(mParams.mText);
-                setCompoundDrawablesRelative(mParams.mDrawables[0],mParams.mDrawables[1],mParams.mDrawables[2],mParams.mDrawables[3]);
+                setCompoundDrawables(mParams.mDrawables[0],mParams.mDrawables[1],mParams.mDrawables[2],mParams.mDrawables[3]);
                 if (onAnimationEndListener!=null) {
                     onAnimationEndListener.onAnimationEnd();
                 }
@@ -425,6 +436,8 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
         }
 
         mState = State.PROGRESS;
+
+        mParams.mText = getText().toString();
 
         this.setCompoundDrawables(null, null, null, null);
         this.setText(null);
@@ -498,6 +511,14 @@ public class CircularProgressButton extends Button implements AnimatedButton, Cu
 
         mIsMorphingInProgress = true;
         mAnimatorSet.start();
+    }
+
+
+    /**
+     * Check if button is animating
+     */
+    public Boolean isAnimating() {
+        return mState == State.PROGRESS;
     }
 
     /**

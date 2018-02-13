@@ -8,9 +8,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import br.com.simplepass.loading_button_lib.animatedDrawables.CircularAnimatedDrawable;
 import br.com.simplepass.loading_button_lib.R;
@@ -19,7 +19,7 @@ import br.com.simplepass.loading_button_lib.R;
 /**
  * Created by leandro on 5/31/16.
  */
-public class CircularProgressEditText extends EditText {
+public class CircularProgressEditText extends AppCompatEditText {
     private enum State {
         PROGRESS, IDLE
     }
@@ -64,17 +64,17 @@ public class CircularProgressEditText extends EditText {
         init(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){
+    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         mPaddingProgress = 0;
 
-        if(attrs == null) {
+        if (attrs == null) {
             //mDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.button_shape_login, null);
-        } else{
-            int[] attrsArray = new int[] {
+        } else {
+            int[] attrsArray = new int[]{
                     android.R.attr.background, // 0
             };
 
-            TypedArray typedArray =  context.obtainStyledAttributes(attrs, R.styleable.CircularProgressButton, defStyleAttr, defStyleRes);
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircularProgressButton, defStyleAttr, defStyleRes);
             TypedArray typedArrayBG = context.obtainStyledAttributes(attrs, attrsArray, defStyleAttr, defStyleRes);
             mDrawable = typedArrayBG.getDrawable(0);
             mSpinningBarWidth = typedArray.getDimension(
@@ -94,7 +94,7 @@ public class CircularProgressEditText extends EditText {
     }
 
     @Override
-    protected void onDraw(Canvas canvas){
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         if (mState == State.PROGRESS && !mIsMorphingInProgress) {
@@ -123,18 +123,18 @@ public class CircularProgressEditText extends EditText {
         }
     }
 
-    public void stopAnimation(){
-        if(mState == State.PROGRESS && !mIsMorphingInProgress) {
+    public void stopAnimation() {
+        if (mState == State.PROGRESS && !mIsMorphingInProgress) {
             mAnimatedDrawable.stop();
         }
     }
 
-    public void revertAnimation(){
-        if(mAnimatedDrawable != null && mAnimatedDrawable.isRunning()){
+    public void revertAnimation() {
+        if (mAnimatedDrawable != null && mAnimatedDrawable.isRunning()) {
             stopAnimation();
         }
 
-        if(mIsMorphingInProgress){
+        if (mIsMorphingInProgress) {
             mAnimatorSet.cancel();
         }
 
@@ -143,7 +143,7 @@ public class CircularProgressEditText extends EditText {
         int fromWidth = getWidth();
         int fromHeight = getHeight();
 
-        int toHeight =  mInitialHeight;
+        int toHeight = mInitialHeight;
         int toWidth = mInitialWidth;
 
         mState = State.IDLE;
@@ -199,21 +199,21 @@ public class CircularProgressEditText extends EditText {
     }
 
     public void startAnimation() {
-        if(mState != State.IDLE) {
+        if (mState != State.IDLE) {
             return;
         }
 
         this.setText(null);
         setClickable(false);
 
-        if(mIsMorphingInProgress ){
+        if (mIsMorphingInProgress) {
             mAnimatorSet.cancel();
         }
 
         mInitialWidth = getWidth();
         mInitialHeight = getHeight();
 
-        int toHeight =  (int) (mInitialHeight * 1.2);
+        int toHeight = (int) (mInitialHeight * 1.2);
         int toWidth = toHeight; //Largura igual altura faz um circulo perfeito
 
         mState = State.PROGRESS;

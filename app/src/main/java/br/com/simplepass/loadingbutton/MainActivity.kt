@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -24,14 +25,16 @@ class MainActivity : AppCompatActivity() {
 
         progressButton.setOnClickListener { view -> animateAndDoneFast(view as CircularProgressImageButton) }
 
+        progressButtonNoPadding.setBackgroundColor(Color.GREEN)
+
         progressButtonNoPadding.setOnClickListener { _ ->
             animateButtonAndRevert(progressButtonNoPadding,
                     ContextCompat.getColor(this@MainActivity, R.color.black),
                     BitmapFactory.decodeResource(resources, R.drawable.ic_alarm_on_white_48dp))
         }
 
-        progressButton2.setOnClickListener { _ ->
-            animateButtonAndRevert(progressButton2,
+        progressFix.setOnClickListener { _ ->
+            animateButtonAndRevert(progressFix,
                     ContextCompat.getColor(this@MainActivity, R.color.transparent),
                     BitmapFactory.decodeResource(resources, R.drawable.ic_cloud_upload_white_24dp))
         }
@@ -64,9 +67,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        noBack.setOnClickListener { view ->
-            animateAndRevert(view as AnimatedButton)
-        }
     }
 
     private fun animateButtonAndRevert(circularProgressButton: CircularProgressButton, fillColor: Int, bitmap: Bitmap) {
@@ -78,14 +78,17 @@ class MainActivity : AppCompatActivity() {
                     bitmap)
         }
 
-        val runnableRevert = { circularProgressButton.revertAnimation { circularProgressButton.text = "Seu texto aqui!" } }
+        val changeActivity = {
+            startActivity(Intent(this, SecondActivity::class.java))
+            finish()
+        }
 
         circularProgressButton.revertAnimation()
 
         circularProgressButton.startAnimation()
         handler.postDelayed(runnable, 3000)
-        handler.postDelayed(runnableRevert, 4000)
-        handler.postDelayed(runnableRevert, 4100)
+        handler.postDelayed(changeActivity, 4000)
+        handler.postDelayed(changeActivity, 4100)
     }
 
     private fun animateTwice(circularProgressButton: CircularProgressButton) {
@@ -121,6 +124,15 @@ class MainActivity : AppCompatActivity() {
             animatedButton.setImageBitmap(BitmapFactory.decodeResource(resources, R.drawable.ic_alarm_on_white_48dp))
         } }, 700)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        progressButtonNoPadding.dispose()
+        progressFix.dispose()
+        progressButtonNoPadding2.dispose()
+        login.dispose()
     }
 
     /*private void animateButton(final CircularProgressButton circularProgressButton){
