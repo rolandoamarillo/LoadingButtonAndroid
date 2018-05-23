@@ -14,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
+import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Handler;
@@ -202,7 +203,16 @@ public class CircularProgressButton extends AppCompatButton implements AnimatedB
                 Drawable current = stateListDrawable.getCurrent();
                 mGradientDrawable = loadGradientDrawable(current);
 
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && drawable instanceof RippleDrawable) {
+                RippleDrawable drawable1 = (RippleDrawable) drawable;
+                Drawable mask = drawable1.findDrawableByLayerId(android.R.id.mask);
+                if (mask != null) {
+                    mGradientDrawable = loadGradientDrawable(mask);
+                } else {
+                    mGradientDrawable = loadGradientDrawable(drawable1.getDrawable(0));
+                }
             }
+
             if (mGradientDrawable != null && mGradientDrawable.morphingDrawable == null) {
                 throw new RuntimeException("Error reading background... Use a shape or a color in xml!");
             }
